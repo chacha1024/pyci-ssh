@@ -38,7 +38,9 @@ async def run_ssh(script, host, port, username, password=None, private_key=None,
             cmds = script.split('\n')
             print(f'{host}: Starting run {len(cmds)} commands..')
             for cmd in cmds:
-                await conn.run(f'{cmd}')
+                print(f'start run: {cmd}')
+                result = await conn.run(f'{cmd}')
+                print(f'finish! result: {result.stdout}')
             print(f'{host}: run {len(cmds)} commands ok! cost: {time.monotonic() - time_start:.2f} s')
     except Exception as e:
         print(f'{host}: ERROR! {e} {type(e)}')
