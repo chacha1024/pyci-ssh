@@ -2,9 +2,8 @@ import asyncio
 import os
 import sys
 import time
-import aiosocks
-import logging
 
+import aiosocks
 import asyncssh
 
 
@@ -37,12 +36,12 @@ async def run_ssh(script, host, port, username, password=None, private_key=None,
                 client_keys=client_keys
         ) as conn:
             cmds = script.split('\n')
-            logging.info(f'{host}: Starting run {len(cmds)} commands..')
+            print(f'{host}: Starting run {len(cmds)} commands..')
             for cmd in cmds:
                 await conn.run(f'{cmd}')
-            logging.info(f'{host}: run {len(cmds)} commands ok! cost: {time.monotonic() - time_start:.2f} s')
+            print(f'{host}: run {len(cmds)} commands ok! cost: {time.monotonic() - time_start:.2f} s')
     except Exception as e:
-        logging.error(f'{host}: ERROR! {e} {type(e)}')
+        print(f'{host}: ERROR! {e} {type(e)}')
 
 
 async def run(script, host_raw, username, password=None, private_key=None, proxy=None):
@@ -56,7 +55,7 @@ async def run(script, host_raw, username, password=None, private_key=None, proxy
         host_raw_list.append(host_raw)
     for raw in host_raw_list:
         host, port = raw.split(':')
-        logging.info(f'SSHing: {host}:{port}')
+        print(f'SSHing: {host}:{port}')
         tasks.append(run_ssh(script, host, port, username, password, private_key, proxy))
     await asyncio.gather(*tasks, return_exceptions=True)
 

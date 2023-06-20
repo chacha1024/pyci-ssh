@@ -11,5 +11,4 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 	&& pip install -r requirements.txt \
 	--no-cache-dir
 
-
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["python", "/app/main.py"]
